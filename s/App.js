@@ -78,7 +78,7 @@ const App = () => {
   return (
     <div className="max-w-[1440px] mx-auto px-4 sm:px-12 pt-8">
       <h1 className="mb-12 bg-clip-text text-transparent bg-gradient-to-r from-slate-300 to-violet-500 text-5xl text-center ">
-        Get weather data for any city or country
+        Get weather data for 'any' city or country
       </h1>
       <form
         className="mb-8 flex flex-col md:flex-row gap-5"
@@ -89,7 +89,7 @@ const App = () => {
       >
         {/* <label>Enter the name of a country or a city</label> */}
         <input
-          placeholder="name (e.g texas)"
+          placeholder="name (e.g london)"
           className="rounded-3xl w-[95%] md:w-1/2 lg:w-4/12 px-7 py-3 text-lg self-center"
           type="text"
           value={inputVal}
@@ -103,7 +103,7 @@ const App = () => {
         </button>
       </form>
       {RenderResults()}
-      <footer className="flex text-3xl justify-center items-center gap-4 sm:gap-7 py-9">
+      <footer className="flex text-2xl sm:text-3xl justify-center items-center gap-4 sm:gap-7 py-9">
         <p className="flex items-center">
           <BiCopyright /> Paul Aromolaran
         </p>
