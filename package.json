@@ -2,7 +2,7 @@
   "name": "thrills-weather-app",
   "version": "1.0.0",
   "description": "fetch weather data from openAPI ",
-  "main": "index.js",
+  "main": "index.html",
   "source": "s/index.html",
   "scripts": {
     "start": "parcel",
