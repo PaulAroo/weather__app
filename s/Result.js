@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+
 const Result = ({
   name,
   country,
@@ -9,7 +11,12 @@ const Result = ({
   windspeed,
 }) => {
   return (
-    <div className="bg-slate-300 rounded-3xl py-4 px-4 sm:px-8 grid">
+    <motion.div
+      initial={{ scale: 0 }}
+      animate={{ scale: 1, opacity: [0, 0, 0, 0.3, 1] }}
+      transition={{ duration: 1 }}
+      className="bg-slate-300 rounded-3xl py-4 px-4 sm:px-8 grid"
+    >
       <div className="flex items-center">
         <h1 className=" text-3xl">
           {name}, {country}
@@ -34,7 +41,7 @@ const Result = ({
           Windspeed <span className="font-bold">{windspeed}m/s</span>
         </p>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

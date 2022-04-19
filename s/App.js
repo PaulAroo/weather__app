@@ -1,4 +1,5 @@
 import Result from "./Result";
+import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { BiCopyright } from "react-icons/bi";
 import { BsGithub, BsLinkedin } from "react-icons/bs";
@@ -17,12 +18,14 @@ const App = () => {
   const [inputVal, setInputVal] = useState("");
 
   const getLatandLon = async (inputVal) => {
-    const res = await fetch(
-      `https://api.openweathermap.org/geo/1.0/direct?q=${inputVal}&limit=1&appid=ad845893bc6a907b577994cbc54aa1a2`
-    );
-    const [resJson] = await res.json();
-    setLongLatList([{ lat: resJson.lat, lon: resJson.lon }]);
-    setInputVal("");
+    if (inputVal) {
+      const res = await fetch(
+        `https://api.openweathermap.org/geo/1.0/direct?q=${inputVal}&limit=1&appid=ad845893bc6a907b577994cbc54aa1a2`
+      );
+      const [resJson] = await res.json();
+      setLongLatList([{ lat: resJson.lat, lon: resJson.lon }]);
+      setInputVal("");
+    }
   };
 
   useEffect(() => {
@@ -95,12 +98,14 @@ const App = () => {
           value={inputVal}
           onChange={(e) => setInputVal(e.target.value)}
         />
-        <button
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
           className="bg-cyan-500 hover:bg-cyan-600 text-white px-6 py-2 max-w-[150px] self-center"
           type="submit"
         >
           Search
-        </button>
+        </motion.button>
       </form>
       {RenderResults()}
       <footer className="flex text-2xl sm:text-3xl justify-center items-center gap-4 sm:gap-7 py-9">
