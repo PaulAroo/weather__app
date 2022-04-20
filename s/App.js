@@ -29,21 +29,25 @@ const App = () => {
     );
 
     const jsonData = await data.json();
-    setWeatherList((prev) => [
-      {
-        name: jsonData.name,
-        country: jsonData.sys.country,
-        icon: jsonData.weather[0].icon,
-        temp: jsonData.main.temp,
-        description: jsonData.weather[0].description,
-        pressure: jsonData.main.pressure,
-        humidity: jsonData.main.humidity,
-        windspeed: jsonData.wind.speed,
-        id: jsonData.id,
-      },
-      ...prev,
-    ]);
-    setInputVal("");
+    if (jsonData.cod !== "404") {
+      setWeatherList((prev) => [
+        {
+          name: jsonData.name,
+          country: jsonData.sys.country,
+          icon: jsonData.weather[0].icon,
+          temp: jsonData.main.temp,
+          description: jsonData.weather[0].description,
+          pressure: jsonData.main.pressure,
+          humidity: jsonData.main.humidity,
+          windspeed: jsonData.wind.speed,
+          id: jsonData.id,
+        },
+        ...prev,
+      ]);
+      setInputVal("");
+    } else {
+      setValidInput("invalid input");
+    }
   };
 
   const RenderResults = () => {
@@ -69,11 +73,13 @@ const App = () => {
   };
 
   const validateInput = () => {
-    !inputValue
-      ? setValidInput("field cannot be empty")
-      : locationList.includes(inputValue)
-      ? setValidInput("data for input already exists")
-      : setLocationList([inputValue]);
+    if (!inputValue) setValidInput("field cannot be empty");
+    else if (locationList.includes(inputValue))
+      setValidInput("data for input already exists");
+    else {
+      setLocationList([inputValue]);
+      setValidInput("");
+    }
   };
 
   return (
@@ -96,7 +102,9 @@ const App = () => {
             }`}
             type="text"
             value={inputValue}
-            onChange={(e) => setInputVal(e.target.value.toLowerCase())}
+            onChange={(e) =>
+              setInputVal(e.target.value.replace(/\s/g, "").toLowerCase())
+            }
           />
           {validInput && (
             <p className="text-center md:text-left py-1 px-4 text-red-600">
@@ -107,7 +115,7 @@ const App = () => {
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
-          className="bg-cyan-500 hover:bg-cyan-600 text-white px-6 py-2 max-w-[150px] self-center"
+          className="bg-cyan-500 hover:bg-cyan-600 text-white px-6 py-2 max-w-[150px] self-center md:self-start"
           type="submit"
         >
           Search
