@@ -4,19 +4,21 @@ import { useState, useEffect } from "react";
 import { BiCopyright } from "react-icons/bi";
 import { BsGithub, BsLinkedin } from "react-icons/bs";
 
+const locations = [
+  "brooklyn",
+  "alaska",
+  "louisville",
+  "abuja",
+  "lagos",
+  "ondo",
+];
+
 const App = () => {
   const [loading, setLoading] = useState(true);
   const [weatherList, setWeatherList] = useState([]);
   const [inputValue, setInputVal] = useState("");
   const [validInput, setValidInput] = useState("");
-  const [locationList, setLocationList] = useState([
-    "brooklyn",
-    "alaska",
-    "louisville",
-    "abuja",
-    "lagos",
-    "ondo",
-  ]);
+  const [locationList, setLocationList] = useState(locations);
 
   useEffect(() => {
     locationList.forEach((location) => getWeatherData(location));
@@ -44,10 +46,10 @@ const App = () => {
         },
         ...prev,
       ]);
-      setInputVal("");
     } else {
       setValidInput("invalid input");
     }
+    setInputVal("");
   };
 
   const RenderResults = () => {
@@ -73,11 +75,13 @@ const App = () => {
   };
 
   const validateInput = () => {
-    if (!inputValue) setValidInput("field cannot be empty");
-    else if (locationList.includes(inputValue))
+    if (!inputValue) {
+      setValidInput("field cannot be empty");
+    } else if (locations.includes(inputValue)) {
       setValidInput("data for input already exists");
-    else {
+    } else {
       setLocationList([inputValue]);
+      locations.push(inputValue);
       setValidInput("");
     }
   };
@@ -103,13 +107,21 @@ const App = () => {
             type="text"
             value={inputValue}
             onChange={(e) =>
-              setInputVal(e.target.value.replace(/\s/g, "").toLowerCase())
+              setInputVal(
+                e.target.value
+                  .replace(/[\s\d!@#$%^&*()_+-=~]/g, "")
+                  .toLowerCase()
+              )
             }
           />
           {validInput && (
-            <p className="text-center md:text-left py-1 px-4 text-red-600">
+            <motion.p
+              initial={{ x: -100 }}
+              animate={{ x: 0 }}
+              className="text-center md:text-left py-1 px-4 text-red-600"
+            >
               {validInput}
-            </p>
+            </motion.p>
           )}
         </div>
         <motion.button
