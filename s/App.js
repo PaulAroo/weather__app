@@ -1,3 +1,5 @@
+
+import 'dotenv/config'
 import Result from "./Result";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
@@ -27,7 +29,7 @@ const App = () => {
 
   const getWeatherData = async (location) => {
     const data = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=ad845893bc6a907b577994cbc54aa1a2&units=metric`
+      `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${process.env.API_KEY}&units=metric`
     );
 
     const jsonData = await data.json();
