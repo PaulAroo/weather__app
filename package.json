@@ -12,6 +12,7 @@
   "dependencies": {
     "@types/react": "^18.0.5",
     "axios": "^0.27.2",
+    "dotenv": "^16.0.1",
     "framer-motion": "^6.3.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
@@ -20,7 +21,6 @@
   "devDependencies": {
     "autoprefixer": "^10.4.4",
     "buffer": "^6.0.3",
-    "dotenv": "^16.0.1",
     "os-browserify": "^0.3.0",
     "parcel": "^2.4.1",
     "path-browserify": "^1.0.1",
