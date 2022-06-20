@@ -1,6 +1,4 @@
 
-import 'dotenv/config'
-import axios from 'axios';
 import Result from "./Result";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
@@ -29,22 +27,23 @@ const App = () => {
   }, [locationList]);
 
   const getWeatherData = async (location) => {
-    const response = await axios.get(
-      `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${process.env.API_KEY}&units=metric`
-    )
-    const data = response.data
-    if (data.cod !== "404") {
+    const data = await fetch(
+      `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=ad845893bc6a907b577994cbc54aa1a2&units=metric`
+    );
+
+    const jsonData = await data.json();
+    if (jsonData.cod !== "404") {
       setWeatherList((prev) => [
         {
-          name: data.name,
-          country: data.sys.country,
-          icon: data.weather[0].icon,
-          temp: data.main.temp,
-          description: data.weather[0].description,
-          pressure: data.main.pressure,
-          humidity: data.main.humidity,
-          windspeed: data.wind.speed,
-          id: data.id,
+          name: jsonData.name,
+          country: jsonData.sys.country,
+          icon: jsonData.weather[0].icon,
+          temp: jsonData.main.temp,
+          description: jsonData.weather[0].description,
+          pressure: jsonData.main.pressure,
+          humidity: jsonData.main.humidity,
+          windspeed: jsonData.wind.speed,
+          id: jsonData.id,
         },
         ...prev,
       ]);
@@ -72,11 +71,7 @@ const App = () => {
         ))}
       </div>
     ) : (
-      <div className='h-[50vh] grid place-content-center'>
-        <div
-          className='w-[30px] h-[30px] rounded-full bg-violet-300 animate-ping'
-        ></div>
-      </div>
+      <p>loading...</p>
     );
   };
 
